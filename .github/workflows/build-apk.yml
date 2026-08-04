@@ -25,7 +25,10 @@ jobs:
 
       - name: Android SDK kur
         uses: android-actions/setup-android@v3
-
+        
+      - name: ImageMagick kur
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+        
       - name: Logo görselinden tüm ikon boyutlarını üret
         run: |
           mkdir -p www/icons
