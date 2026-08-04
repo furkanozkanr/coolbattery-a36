@@ -229,3 +229,65 @@ body{
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
 button{font-family:inherit; border:none; background:none; cursor:pointer;}
+/* ---------------- Termal Kalp (heartbeat) ---------------- */
+.icon-heart-beat{
+  width:22px; height:22px; fill:#ff8fa8;
+  filter:drop-shadow(0 0 6px rgba(255,92,128,.6));
+  animation:heartbeat 1.8s ease-in-out infinite;
+  transform-origin:center;
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  20%{transform:scale(1.18);}
+  40%{transform:scale(0.96);}
+  60%{transform:scale(1.1);}
+}
+.cooldown-toggle{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; margin-top:14px; padding:12px; border-radius:14px;
+  background:#0a140f; border:1px solid var(--card-border);
+  color:var(--ink-dim); font-size:12.5px; font-weight:700;
+}
+.cooldown-toggle svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.cooldown-toggle.active{
+  color:var(--blue); border-color:rgba(63,182,255,.4);
+  box-shadow:0 0 14px rgba(63,182,255,.2), inset 0 0 0 1px rgba(63,182,255,.3);
+}
+
+/* Body-wide emergency cooldown dimming (reduces this app's own visual/CPU load) */
+body.cooldown-active .screen{ filter:saturate(.7) brightness(.82); }
+body.cooldown-active .icon-heart-beat,
+body.cooldown-active .quick-btn::before{ animation-play-state:paused !important; }
+
+/* Critical overlay */
+.critical-overlay{
+  position:fixed; inset:0; z-index:100;
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:36px 28px;
+  background:radial-gradient(120% 90% at 50% 20%, rgba(60,10,10,.96), rgba(5,5,6,.98));
+  backdrop-filter:blur(2px);
+}
+.critical-overlay.show{display:flex;}
+.critical-heart{
+  width:84px; height:84px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 35% 30%, #3a1216, #150607);
+  box-shadow:0 0 40px rgba(255,92,92,.55), inset 0 0 0 1px rgba(255,92,92,.4);
+  margin-bottom:18px;
+}
+.critical-heart svg{
+  width:40px; height:40px; fill:var(--danger);
+  filter:drop-shadow(0 0 10px rgba(255,92,92,.8));
+  animation:heartbeat .9s ease-in-out infinite;
+}
+.critical-title{font-size:20px; font-weight:800; color:#ffdada;}
+.critical-temp{font-size:34px; font-weight:800; color:var(--danger); margin:6px 0 14px;}
+.critical-text{font-size:13px; line-height:1.6; color:#e7c9c9; max-width:320px; margin:0 0 26px;}
+.critical-btn{
+  width:100%; max-width:320px; padding:14px; border-radius:14px; margin-bottom:10px;
+  font-weight:700; font-size:14px; color:var(--ink); background:#1a1010; border:1px solid rgba(255,92,92,.3);
+}
+.critical-btn-primary{
+  background:linear-gradient(180deg,#ff6c6c,#e23e3e); color:#20080a; border:none;
+  box-shadow:0 8px 24px rgba(255,92,92,.35);
+}
