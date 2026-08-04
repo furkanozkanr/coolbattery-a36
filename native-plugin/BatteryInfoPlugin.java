@@ -25,7 +25,7 @@ public class BatteryInfoPlugin extends Plugin {
 
         JSObject ret = new JSObject();
         if (battery == null) {
-            call.reject("Pil verisi okunamadı");
+            call.reject("Pil verisi okunamadi");
             return;
         }
 
@@ -64,7 +64,9 @@ public class BatteryInfoPlugin extends Plugin {
             ctx.getPackageManager().getPackageInfo("com.samsung.android.lool", 0);
             ctx.startActivity(intent);
             launched = true;
-        } catch (PackageManager.NameNotFoundException | android.content.ActivityNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
+            launched = false;
+        } catch (android.content.ActivityNotFoundException e) {
             launched = false;
         }
 
@@ -74,7 +76,12 @@ public class BatteryInfoPlugin extends Plugin {
                 fallback.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ctx.startActivity(fallback);
                 launched = true;
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+            }
         }
 
-        JSObject ret = new JSObje
+        JSObject ret = new JSObject();
+        ret.put("opened", launched);
+        call.resolve(ret);
+    }
+}
