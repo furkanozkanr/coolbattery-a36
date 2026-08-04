@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>CoolBattery A36</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#05100a">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= PROFILE SELECT SCREEN ================= -->
+<section id="screen-profile" class="screen active">
+  <div class="bg-glow"></div>
+  <div class="profile-wrap">
+    <img class="brand-logo" src="icons/icon-192.png" alt="CoolBattery A36">
+    <h1 class="brand-title">Cool<span>Battery</span> A36</h1>
+    <p class="brand-sub">Galaxy A36 Özel Sürüm · Akıllı Pil &amp; Isı Kontrolü</p>
+
+    <div class="profile-grid">
+      <button class="profile-card" data-profile="furkan">
+        <span class="profile-ring">
+          <svg viewBox="0 0 24 24" class="icon-user"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.7-8 6v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1c0-3.3-3.6-6-8-6Z"/></svg>
+        </span>
+        <span class="profile-name">Furkan</span>
+        <span class="profile-tag">Performans Modu</span>
+      </button>
+
+      <button class="profile-card" data-profile="beren">
+        <span class="profile-ring">
+          <svg viewBox="0 0 24 24" class="icon-user"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.7-8 6v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1c0-3.3-3.6-6-8-6Z"/></svg>
+        </span>
+        <span class="profile-name">Beren (Abla)</span>
+        <span class="profile-tag">Günlük Kullanım Modu</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DASHBOARD SCREEN ================= -->
+<section id="screen-dashboard" class="screen">
+  <div class="bg-glow"></div>
+
+  <header class="topbar">
+    <button id="btn-switch-profile" class="icon-btn" aria-label="Profil değiştir">
+      <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.7-8 6v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1c0-3.3-3.6-6-8-6Z"/></svg>
+    </button>
+    <div class="topbar-title">
+      <span id="active-profile-name">Furkan</span>
+      <small>Galaxy A36</small>
+    </div>
+    <button id="btn-settings" class="icon-btn" aria-label="Ayarlar">
+      <svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 .06-1 7.6 7.6 0 0 0-.06-1l2.1-1.6a.5.5 0 0 0 .12-.66l-2-3.4a.5.5 0 0 0-.6-.22l-2.5 1a7.7 7.7 0 0 0-1.7-1l-.4-2.6a.5.5 0 0 0-.5-.42h-4a.5.5 0 0 0-.5.42l-.4 2.6a7.7 7.7 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.22l-2 3.4a.5.5 0 0 0 .12.66L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.12.66l2 3.4a.5.5 0 0 0 .6.22l2.5-1a7.7 7.7 0 0 0 1.7 1l.4 2.6a.5.5 0 0 0 .5.42h4a.5.5 0 0 0 .5-.42l.4-2.6a7.7 7.7 0 0 0 1.7-1l2.5 1a.5.5 0 0 0 .6-.22l2-3.4a.5.5 0 0 0-.12-.66L19.4 13ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/></svg>
+    </button>
+  </header>
+
+  <main class="content">
+
+    <!-- Battery ring -->
+    <div class="battery-hero">
+      <svg class="ring-svg" viewBox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="86"/>
+        <circle id="ring-progress" class="ring-progress" cx="100" cy="100" r="86"/>
+      </svg>
+      <div class="battery-hero-center">
+        <svg viewBox="0 0 24 24" class="icon-drop"><path d="M12 2s6.5 7.1 6.5 12A6.5 6.5 0 0 1 5.5 14C5.5 9.1 12 2 12 2Z"/></svg>
+        <div id="battery-percent" class="battery-percent">--%</div>
+        <div id="battery-status" class="battery-status">Durum okunuyor…</div>
+      </div>
+    </div>
+
+    <!-- Thermal card -->
+    <div class="card thermal-card">
+      <div class="card-head">
+        <svg viewBox="0 0 24 24" class="icon-thermo"><path d="M13 14.76V4.5a2.5 2.5 0 0 0-5 0v10.26a4 4 0 1 0 5 0ZM10.5 4a1 1 0 0 1 2 0v9.5h-2V4Z"/></svg>
+        <div>
+          <div class="card-title">Isı Durumu</div>
+          <div id="thermal-source" class="card-sub">Kaynak: —</div>
+        </div>
+        <div id="thermal-badge" class="badge badge-ok">Normal</div>
+      </div>
+      <div class="thermal-bar-track">
+        <div id="thermal-bar-fill" class="thermal-bar-fill"></div>
+      </div>
+      <div class="thermal-scale">
+        <span>Serin</span><span>Normal</span><span>Isınıyor</span><span>Kritik</span>
+      </div>
+      <div id="thermal-value" class="thermal-value">-- °C</div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="quick-grid">
+      <button id="btn-cooldown" class="quick-btn glow-green">
+        <svg viewBox="0 0 24 24" class="icon-snow"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11M2 12h20M6.5 4.5l11 15M17.5 4.5l-11 15"/></svg>
+        <span>Hızlı Serinlet</span>
+      </button>
+      <button id="btn-chargelimit" class="quick-btn glow-blue">
+        <svg viewBox="0 0 24 24" class="icon-bolt"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+        <span>Şarj Sınırı</span>
+      </button>
+      <button id="btn-report" class="quick-btn glow-purple">
+        <svg viewBox="0 0 24 24" class="icon-chart"><path d="M4 20V10M10 20V4M16 20v-7M22 20v-4"/></svg>
+        <span>Pil Raporu</span>
+      </button>
+      <button id="btn-devicecare" class="quick-btn glow-amber">
+        <svg viewBox="0 0 24 24" class="icon-shield"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5l-8-3Z"/></svg>
+        <span>Cihaz Bakımı</span>
+      </button>
+    </div>
+
+    <!-- Health summary -->
+    <div class="card health-card">
+      <div class="card-head">
+        <svg viewBox="0 0 24 24" class="icon-heart"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.3.2.4.8.4 1 0C11.2 6.1 12.6 5 14.6 5 18 5 19.4 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>
+        <div>
+          <div class="card-title">Pil Sağlığı</div>
+          <div class="card-sub">45W hızlı şarj döngü takibi</div>
+        </div>
+      </div>
+      <div class="health-rows">
+        <div class="health-row"><span>Tahmini sağlık</span><b id="health-pct">%--</b></div>
+        <div class="health-row"><span>Şarj döngüsü (bu oturum)</span><b id="health-cycles">--</b></div>
+        <div class="health-row"><span>Hedef şarj sınırı</span><b id="health-limit">%85</b></div>
+      </div>
+    </div>
+
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab-btn active" data-tab="dashboard">
+      <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span>Panel</span>
+    </button>
+    <button class="tab-btn" data-tab="settings" id="tab-settings">
+      <svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.7 7.7 0 0 0-1.7-1l-.4-2.6h-4l-.4 2.6a7.7 7.7 0 0 0-1.7 1l-2.5-1-2 3.4L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1a7.7 7.7 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.7 7.7 0 0 0 1.7-1l2.5 1 2-3.4L19.4 13ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/></svg>
+      <span>Ayarlar</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= SETTINGS SCREEN ================= -->
+<section id="screen-settings" class="screen">
+  <div class="bg-glow"></div>
+  <header class="topbar">
+    <button id="btn-back-settings" class="icon-btn" aria-label="Geri">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="topbar-title"><span>Ayarlar</span></div>
+    <span class="icon-btn" style="visibility:hidden"></span>
+  </header>
+  <main class="content">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">Şarj Sınırı Hedefi</div>
+      <div class="segmented" id="limit-segmented">
+        <button data-val="80">%80</button>
+        <button data-val="85" class="active">%85</button>
+        <button data-val="90">%90</button>
+        <button data-val="100">%100</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">Optimizasyon Hassasiyeti</div>
+      <div class="segmented" id="mode-segmented">
+        <button data-val="perf">Performans</button>
+        <button data-val="balanced" class="active">Dengeli</button>
+        <button data-val="save">Tasarruf</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:6px">Bilgilendirme</div>
+      <p class="fineprint">
+        CoolBattery A36, işletim sisteminin izin verdiği gerçek pil ve sıcaklık verilerini okur.
+        Diğer uygulamaları kapatma veya şarjı donanımsal olarak kesme gibi işlemler Android
+        güvenlik politikaları nedeniyle üçüncü parti uygulamalara açık değildir; bu nedenle
+        "Hızlı Serinlet" ve "Şarj Sınırı" özellikleri sizi doğru anda yönlendiren akıllı
+        hatırlatmalar olarak çalışır.
+      </p>
+    </div>
+  </main>
+</section>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="capacitor-bridge.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
