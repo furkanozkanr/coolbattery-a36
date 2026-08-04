@@ -112,11 +112,54 @@
     }
     if (!isCharging) state.limitNotifiedForSession = false;
   }
+  
+// ---------------- Termal Kalp ----------------
+  let wasCritical = false;
+  let cooldownActive = false;
+  const heartEl = $('#heart-icon');
 
-  // ---------------- Thermal ----------------
+  function setHeartRate(tempC) {
+    if (!heartEl) return;
+    let duration;
+    if (tempC == null) duration = 1.8;
+    else if (tempC < 32) duration = 2.2;
+    else if (tempC < 38) duration = 1.6;
+    else if (tempC < 42) duration = 1.0;
+    else duration = 0.55;
+    heartEl.style.animationDuration = duration + 's';
+  }
+
+  function showCriticalOverlay(tempC) {
+    $('#critical-temp').textContent = tempC.toFixed(1) + ' °C';
+    $('#critical-overlay').classList.add('show');
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+  }
+
+  function hideCriticalOverlay() {
+    $('#critical-overlay').classList.remove('show');
+  }
+
+  function setCooldownMode(active) {
+    cooldownActive = active;
+    document.body.classList.toggle('cooldown-active', active);
+    $('#btn-cooldown-mode').classList.toggle('active', active);
+    $('#cooldown-toggle-label').textContent = 'Acil Soğutma Modu · ' + (active ? 'Açık' : 'Kapalı');
+    if (active) {
+      toast('Acil soğutma modu açık — uygulama kendi animasyon ve arka plan yükünü azaltıyor');
+    }
+  }
+
+  $('#btn-cooldown-mode').addEventListener('click', () => setCooldownMode(!cooldownActive));
+  $('#btn-critical-dismiss').addEventListener('click', hideCriticalOverlay);
+  $('#btn-critical-devicecare').addEventListener('click', () => {
+    window.CoolBridge.openDeviceCare();
+    hideCriticalOverlay();
+  });
+
   function paintThermal(tempC, source) {
     $('#thermal-source').textContent = 'Kaynak: ' + source;
     $('#thermal-value').textContent = (tempC != null ? tempC.toFixed(1) : '--') + ' °C';
+    setHeartRate(tempC);
 
     let pct, badgeClass, badgeText;
     if (tempC == null) {
@@ -135,11 +178,19 @@
     badge.className = 'badge ' + badgeClass;
     badge.textContent = badgeText;
 
-    if (tempC != null && tempC >= 42) {
+    const isCriticalNow = tempC != null && tempC >= 42;
+    if (isCriticalNow && !wasCritical) {
       window.CoolBridge.notify('CoolBattery A36', 'Cihaz sıcaklığı kritik seviyede (' + tempC.toFixed(1) + '°C). Ağır uygulamaları kapatıp cihazı dinlendirin.', 777);
+      showCriticalOverlay(tempC);
+      setCooldownMode(true);
+    } else if (isCriticalNow) {
+      $('#critical-temp').textContent = tempC.toFixed(1) + ' °C';
+    } else if (!isCriticalNow && wasCritical) {
+      hideCriticalOverlay();
     }
+    wasCritical = isCriticalNow;
   }
-
+  
   // ---------------- Data polling ----------------
   let webBatteryRef = null;
 
