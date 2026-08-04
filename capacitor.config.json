@@ -1,0 +1,21 @@
+{
+  "appId": "com.ozkan.coolbatterya36",
+  "appName": "CoolBattery A36",
+  "webDir": "www",
+  "backgroundColor": "#05100a",
+  "android": {
+    "backgroundColor": "#05100a"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1400,
+      "backgroundColor": "#05100a",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_coolbattery",
+      "iconColor": "#5CE65C"
+    }
+  }
+}
