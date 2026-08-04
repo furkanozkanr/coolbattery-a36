@@ -89,6 +89,13 @@ jobs:
             cp "www/icons/icon-$s.png" "android/app/src/main/res/mipmap-$d/ic_launcher_round.png"
           done
 
+      - name: Varsayılan adaptive icon'u kaldır (yeşil logonun görünmesi için)
+        run: |
+          rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+          rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+          rm -f android/app/src/main/res/values/ic_launcher_background.xml
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+
       - name: Gradle çalıştırma izni ver
         run: chmod +x android/gradlew
 
