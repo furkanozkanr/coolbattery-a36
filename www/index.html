@@ -72,12 +72,12 @@
       </div>
     </div>
 
-    <!-- Thermal card -->
+    <!-- Thermal Heart card -->
     <div class="card thermal-card">
       <div class="card-head">
-        <svg viewBox="0 0 24 24" class="icon-thermo"><path d="M13 14.76V4.5a2.5 2.5 0 0 0-5 0v10.26a4 4 0 1 0 5 0ZM10.5 4a1 1 0 0 1 2 0v9.5h-2V4Z"/></svg>
+        <svg id="heart-icon" viewBox="0 0 24 24" class="icon-heart-beat"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.3.2.4.8.4 1 0C11.2 6.1 12.6 5 14.6 5 18 5 19.4 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>
         <div>
-          <div class="card-title">Isı Durumu</div>
+          <div class="card-title">Termal Kalp</div>
           <div id="thermal-source" class="card-sub">Kaynak: —</div>
         </div>
         <div id="thermal-badge" class="badge badge-ok">Normal</div>
@@ -89,8 +89,12 @@
         <span>Serin</span><span>Normal</span><span>Isınıyor</span><span>Kritik</span>
       </div>
       <div id="thermal-value" class="thermal-value">-- °C</div>
+      <button id="btn-cooldown-mode" class="cooldown-toggle">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11M2 12h20M6.5 4.5l11 15M17.5 4.5l-11 15"/></svg>
+        <span id="cooldown-toggle-label">Acil Soğutma Modu · Kapalı</span>
+      </button>
     </div>
-
+    
     <!-- Quick actions -->
     <div class="quick-grid">
       <button id="btn-cooldown" class="quick-btn glow-green">
@@ -186,7 +190,17 @@
 
 <!-- Toast -->
 <div id="toast" class="toast"></div>
-
+  <!-- Critical thermal alert overlay -->
+<div id="critical-overlay" class="critical-overlay">
+  <div class="critical-heart">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.3.2.4.8.4 1 0C11.2 6.1 12.6 5 14.6 5 18 5 19.4 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>
+  </div>
+  <div class="critical-title">Kritik Isı Uyarısı</div>
+  <div id="critical-temp" class="critical-temp">-- °C</div>
+  <p class="critical-text">Cihaz sıcaklığı güvenli seviyenin üzerinde. Ağır uygulamaları kapatın ve cihazı birkaç dakika dinlendirin.</p>
+  <button id="btn-critical-devicecare" class="critical-btn critical-btn-primary">Cihaz Bakımını Aç</button>
+  <button id="btn-critical-dismiss" class="critical-btn">Anladım, Kapat</button>
+</div>
 <script src="capacitor-bridge.js"></script>
 <script src="js/app.js"></script>
 </body>
