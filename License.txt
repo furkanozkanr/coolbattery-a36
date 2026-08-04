@@ -1,0 +1,21 @@
+Türkçe Metin
+Telif Hakkı © 2026 Furkan Özkan. Tüm Hakları Saklıdır.
+Bu depoda (repository) bulunan yazılım, kaynak kodu, tasarım, logo, görsel öğeler ve ilişkili tüm materyaller ("Yazılım"), Furkan Özkan'a aittir ve telif hakkı yasaları ile korunmaktadır. Furkan Özkan'ın önceden verilmiş yazılı izni olmaksızın aşağıdaki işlemlerin yapılması kesinlikle yasaktır:
+1. Yazılımın tamamının veya bir kısmının kopyalanması, çoğaltılması veya dağıtılması,
+2. Yazılımın değiştirilmesi, uyarlanması veya türev bir çalışma oluşturulması,
+3. Yazılımın herhangi bir uygulama mağazasında (Google Play, App Store vb.), APK paylaşım sitelerinde veya benzeri platformlarda yayınlanması ya da satışa sunulması,
+4. Yazılımın kaynak kodunun, tasarımının veya logosunun kendi ürünü gibi sunulması.
+Bu deponun (açık kaynak/public ise) görüntülenmesi, yukarıda belirtilen hakların hiçbirini otomatik olarak devretmez veya lisanslamaz. İzinsiz kullanım, kopyalama veya dağıtım tespiti durumunda yasal yollara başvurulacaktır.
+Sorularınız veya iş birliği talepleriniz için iletişim: [furkanozkanr@gmail.com]
+
+───
+
+English Version
+Copyright © 2026 Furkan Özkan. All Rights Reserved.
+The software, source code, design, logo, visual elements, and all associated materials ("Software") in this repository are the property of Furkan Özkan and are protected by copyright laws. None of the following actions may be taken without the prior written permission of Furkan Özkan:
+1. Copying, reproducing, or distributing the Software in whole or in part,
+2. Modifying, adapting, or creating derivative works based on the Software,
+3. Publishing, distributing, or offering the Software for sale on any app store (Google Play, App Store, etc.), APK sharing sites, or similar platforms,
+4. Presenting the source code, design, or logo of the Software as your own product.
+Viewing this repository (if it is a public repository) does not automatically grant any of the rights listed above. Unauthorized use, copying, or distribution will result in legal action.
+For inquiries or collaboration proposals, please contact: [furkanozkanr@gmail.com]
