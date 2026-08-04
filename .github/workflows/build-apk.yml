@@ -1,0 +1,100 @@
+name: Build CoolBattery A36 APK
+
+on:
+  workflow_dispatch:   # "Run workflow" tuşuyla elle tetikleme
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodları indir
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: JDK 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Android SDK kur
+        uses: android-actions/setup-android@v3
+
+      - name: Logo görselinden tüm ikon boyutlarını üret
+        run: |
+          mkdir -p www/icons
+          for size in 72 96 128 144 152 180 192 384 512; do
+            convert www/logo.png -resize ${size}x${size} www/icons/icon-${size}.png
+          done
+          cp www/icons/icon-512.png www/icons/maskable-512.png
+          mkdir -p android-res/notification-icon
+          for pair in mdpi:24 hdpi:36 xhdpi:48 xxhdpi:72 xxxhdpi:96; do
+            d="${pair%%:*}"; s="${pair##*:}"
+            convert www/logo.png -resize ${s}x${s} -alpha extract -threshold 40% \
+              \( -clone 0 -fill white -colorize 100 \) +swap -alpha off -compose CopyOpacity -composite \
+              "android-res/notification-icon/ic_stat_coolbattery_${d}.png"
+          done
+
+      - name: Bağımlılıkları kur
+        run: npm install
+
+      - name: Android projesini oluştur
+        run: npx cap add android
+
+      - name: Web dosyalarını senkronize et
+        run: npx cap sync android
+
+      - name: Gerçek pil/ısı eklentisini ekle
+        run: |
+          mkdir -p android/app/src/main/java/com/ozkan/coolbatterya36
+          cp native-plugin/BatteryInfoPlugin.java android/app/src/main/java/com/ozkan/coolbatterya36/BatteryInfoPlugin.java
+          cat > android/app/src/main/java/com/ozkan/coolbatterya36/MainActivity.java << 'EOF'
+          package com.ozkan.coolbatterya36;
+
+          import com.getcapacitor.BridgeActivity;
+          import android.os.Bundle;
+
+          public class MainActivity extends BridgeActivity {
+            @Override
+            public void onCreate(Bundle savedInstanceState) {
+              registerPlugin(BatteryInfoPlugin.class);
+              super.onCreate(savedInstanceState);
+            }
+          }
+          EOF
+
+      - name: Bildirim ikonlarını ekle
+        run: |
+          for density in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+            mkdir -p "android/app/src/main/res/drawable-$density"
+            cp "android-res/notification-icon/ic_stat_coolbattery_$density.png" \
+               "android/app/src/main/res/drawable-$density/ic_stat_coolbattery.png"
+          done
+
+      - name: Uygulama ikonunu ayarla (tüm yoğunluklar)
+        run: |
+          for density in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+            d="${density%%:*}"; s="${density##*:}"
+            mkdir -p "android/app/src/main/res/mipmap-$d"
+            cp "www/icons/icon-$s.png" "android/app/src/main/res/mipmap-$d/ic_launcher.png"
+            cp "www/icons/icon-$s.png" "android/app/src/main/res/mipmap-$d/ic_launcher_round.png"
+          done
+
+      - name: Gradle çalıştırma izni ver
+        run: chmod +x android/gradlew
+
+      - name: APK derle (debug — imzasız, doğrudan kurulabilir)
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+      - name: APK'yı yükle (indirilebilir çıktı)
+        uses: actions/upload-artifact@v4
+        with:
+          name: CoolBattery-A36-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
