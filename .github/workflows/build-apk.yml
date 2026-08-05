@@ -25,10 +25,10 @@ jobs:
 
       - name: Android SDK kur
         uses: android-actions/setup-android@v3
-        
+
       - name: ImageMagick kur
         run: sudo apt-get update && sudo apt-get install -y imagemagick
-        
+
       - name: Logo görselinden tüm ikon boyutlarını üret
         run: |
           mkdir -p www/icons
@@ -80,7 +80,7 @@ jobs:
                "android/app/src/main/res/drawable-$density/ic_stat_coolbattery.png"
           done
 
-      - name: Uygulama ikonunu ayarla (tüm yoğunluklar)
+      - name: Uygulama ikonunu ayarla (klasik + adaptif ikon)
         run: |
           for density in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
             d="${density%%:*}"; s="${density##*:}"
@@ -89,12 +89,32 @@ jobs:
             cp "www/icons/icon-$s.png" "android/app/src/main/res/mipmap-$d/ic_launcher_round.png"
           done
 
-      - name: Varsayılan adaptive icon'u kaldır (yeşil logonun görünmesi için)
-        run: |
-          rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
-          rm -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
-          rm -f android/app/src/main/res/values/ic_launcher_background.xml
-          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+          mkdir -p android/app/src/main/res/drawable
+          cat > android/app/src/main/res/drawable/ic_launcher_background.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+              <solid android:color="#05100a"/>
+          </shape>
+          EOF
+
+          for pair in mdpi:108 hdpi:162 xhdpi:216 xxhdpi:324 xxxhdpi:432; do
+            d="${pair%%:*}"; s="${pair##*:}"
+            fg=$(( s * 62 / 100 ))
+            convert -size ${s}x${s} xc:none \
+              \( www/logo.png -resize ${fg}x${fg} \) -gravity center -composite \
+              "android/app/src/main/res/mipmap-$d/ic_launcher_foreground.png"
+          done
+
+          mkdir -p android/app/src/main/res/mipmap-anydpi-v26
+          cat > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@drawable/ic_launcher_background"/>
+              <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+          </adaptive-icon>
+          EOF
+          cp android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml \
+             android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
 
       - name: Gradle çalıştırma izni ver
         run: chmod +x android/gradlew
