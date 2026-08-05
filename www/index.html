@@ -12,8 +12,19 @@
 </head>
 <body>
 
+<!-- ================= INTRO / SPLASH SCREEN ================= -->
+<section id="screen-intro" class="screen active">
+  <div class="bg-glow"></div>
+  <div class="intro-wrap">
+    <div class="intro-ring"></div>
+    <img class="intro-logo" src="icons/icon-192.png" alt="CoolBattery A36">
+    <div class="intro-title">Cool<span>Battery</span> A36</div>
+    <div class="intro-sub">Galaxy A36 Özel Sürüm</div>
+  </div>
+</section>
+
 <!-- ================= PROFILE SELECT SCREEN ================= -->
-<section id="screen-profile" class="screen active">
+<section id="screen-profile" class="screen">
   <div class="bg-glow"></div>
   <div class="profile-wrap">
     <img class="brand-logo" src="icons/icon-192.png" alt="CoolBattery A36">
@@ -94,7 +105,7 @@
         <span id="cooldown-toggle-label">Acil Soğutma Modu · Kapalı</span>
       </button>
     </div>
-    
+
     <!-- Quick actions -->
     <div class="quick-grid">
       <button id="btn-cooldown" class="quick-btn glow-green">
@@ -190,7 +201,8 @@
 
 <!-- Toast -->
 <div id="toast" class="toast"></div>
-  <!-- Critical thermal alert overlay -->
+
+<!-- Critical thermal alert overlay -->
 <div id="critical-overlay" class="critical-overlay">
   <div class="critical-heart">
     <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.3.2.4.8.4 1 0C11.2 6.1 12.6 5 14.6 5 18 5 19.4 8.4 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>
@@ -201,6 +213,7 @@
   <button id="btn-critical-devicecare" class="critical-btn critical-btn-primary">Cihaz Bakımını Aç</button>
   <button id="btn-critical-dismiss" class="critical-btn">Anladım, Kapat</button>
 </div>
+
 <script src="capacitor-bridge.js"></script>
 <script src="js/app.js"></script>
 </body>
