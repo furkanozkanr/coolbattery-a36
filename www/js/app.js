@@ -3,6 +3,7 @@
 
   const $ = (sel) => document.querySelector(sel);
   const screens = {
+    intro: $('#screen-intro'),
     profile: $('#screen-profile'),
     dashboard: $('#screen-dashboard'),
     settings: $('#screen-settings'),
@@ -112,8 +113,8 @@
     }
     if (!isCharging) state.limitNotifiedForSession = false;
   }
-  
-// ---------------- Termal Kalp ----------------
+
+  // ---------------- Termal Kalp ----------------
   let wasCritical = false;
   let cooldownActive = false;
   const heartEl = $('#heart-icon');
@@ -190,7 +191,7 @@
     }
     wasCritical = isCriticalNow;
   }
-  
+
   // ---------------- Data polling ----------------
   let webBatteryRef = null;
 
@@ -255,13 +256,20 @@
   });
 
   // ---------------- Boot ----------------
+  function finishIntro() {
+    screens.intro.classList.add('fade-out');
+    setTimeout(() => {
+      if (state.profile) {
+        setProfile(state.profile);
+      } else {
+        showScreen('profile');
+      }
+    }, 400);
+  }
+
   async function boot() {
     await initWebBatteryFallback();
-    if (state.profile) {
-      setProfile(state.profile);
-    } else {
-      showScreen('profile');
-    }
+    setTimeout(finishIntro, 1900);
     refreshBattery();
     setInterval(refreshBattery, 15000);
   }
